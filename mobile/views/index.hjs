@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src="../javascripts/zepto.min.js"></script>
+	<script src="../javascripts/touch.js"></script>
+	<style>
+		body{overflow: hidden; margin: 0; padding: 0; position: relative;}
+		#content{position: absolute; left: 0; width: 100%;}
+		.page{width: 100%; display: block;}
+		.page1{background: red;}
+		.page2{background: yellow;}
+		.page3{background: gray;}
+		.page4{background: blue;}
+		.page5{background: green;}
+	</style>
+  </head>
+  <body>
+    <h1>{{ title }}</h1>
+    <p>Welcome to {{ title }}</p>
+    <div id="content">
+		<sction class="page page1"></sction>
+		<sction class="page page2"></sction>
+		<sction class="page page3"></sction>
+		<sction class="page page4"></sction>
+		<sction class="page page5"></sction>
+	</div>
+	<script>
+	document.body.addEventListener('touchstart', function (e) {
+    //console.log("target:"+e.target.className);
+    e = e.changedTouches[0];
+    onStart(e);
+	});
+
+	document.body.addEventListener('touchmove', function (e) {
+	    onMove(e.changedTouches[0], e);
+	});
+
+	document.body.addEventListener('touchend', function (e) {
+	    onEnd(e.changedTouches[0]);
+	});
+		$(function(){
+			var win_width = $(window).width(),
+				win_height = $(window).height();
+			$('.page').height(win_height);
+			$('body').swipeUp(function(){
+				alert(win_height);
+				alert('s');
+				$('#content').css({top:'-'+win_height+'px'});
+			});
+		});
+	</script>
+  </body>
+</html>
