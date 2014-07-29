@@ -9,50 +9,30 @@
 	<script src="../javascripts/zepto.min.js"></script>
 	<script src="../javascripts/touch.js"></script>
 	<style>
-		body{overflow: hidden; margin: 0; padding: 0; position: relative;}
-		#content{position: absolute; left: 0; width: 100%;}
-		.page{width: 100%; display: block;}
-		.page1{background: red;}
-		.page2{background: yellow;}
-		.page3{background: gray;}
-		.page4{background: blue;}
-		.page5{background: green;}
+		body{overflow: hidden; margin: 0 auto; padding: 0; width: 100%; position: relative;}
+		.q1,.q2,.q3{width: 300px; height: 300px; position: absolute;}
+		.q1{background-color: red; left: 0; top: 30px; height: 30px;}
+		.q2{background-color: blue; position: static;}
+		.q3{background-color: green; left: 100px; top: 50px;}
 	</style>
   </head>
-  <body>
-    <h1>{{ title }}</h1>
-    <p>Welcome to {{ title }}</p>
-    <div id="content">
-		<sction class="page page1"></sction>
-		<sction class="page page2"></sction>
-		<sction class="page page3"></sction>
-		<sction class="page page4"></sction>
-		<sction class="page page5"></sction>
-	</div>
-	<script>
-	document.body.addEventListener('touchstart', function (e) {
-    //console.log("target:"+e.target.className);
-    e = e.changedTouches[0];
-    onStart(e);
-	});
-
-	document.body.addEventListener('touchmove', function (e) {
-	    onMove(e.changedTouches[0], e);
-	});
-
-	document.body.addEventListener('touchend', function (e) {
-	    onEnd(e.changedTouches[0]);
-	});
-		$(function(){
-			var win_width = $(window).width(),
-				win_height = $(window).height();
-			$('.page').height(win_height);
-			$('body').swipeUp(function(){
-				alert(win_height);
-				alert('s');
-				$('#content').css({top:'-'+win_height+'px'});
-			});
+  <body onmousewheel="return false;">
+	<div href="javascript:;" class="q1"><div href="javascript:;" class="q3"></div></div>
+	<div href="javascript:;" class="q2"></div>
+	
+		
+		<script>
+		$('.q1').on('click',function() {
+			$(this).text('q1');
 		});
-	</script>
+		$('.q2').on('click',function() {
+			$(this).text('q2');
+			
+		});
+		$('.q3').on('click',function() {
+			$(this).text('q3');
+			
+		});
+		</script>
   </body>
 </html>

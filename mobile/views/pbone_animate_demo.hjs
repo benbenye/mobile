@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<script src="../javascripts/zepto.min.js"></script>
+	<script src="../javascripts/touch.js"></script>
+	<style>
+		body{overflow: hidden; margin: 0 auto; padding: 0; width: 100%; position: relative;}
+		.log{position: absolute; top: 0; left: 0;}
+		#scene{width: 100%; position: absolute; -webkit-transform:translateY(0);}
+		
+		.page{width: 100%; display: block; position: relative;}
+		.page1{background: red; background-image: url(../images/bg_01.jpg); background-size: contain;}
+		.page2{background: yellow;}
+		.page3{background: red;}
+		.page4{background: blue;}
+		.page5{background: green;}
+		.show{display: block;}
+		.none{display: none;}
+		.new{background: #4bf;}
+		.animate{			
+			-webkit-transition-property:all;
+			-webkit-transition-duration:.5s;
+			-webkit-transition-delay:0;
+			-webkit-transition-timing-function:ease;
+		}
+		.up-box{ position: absolute; bottom: 20px; left: 50%; width: 50px; height: 50px; border-radius: 30px; background-color: #ccc; margin-left: -25px;}
+		.up,.up b{position: absolute;top: 20px;left: 16px;border-width: 0 10px 10px;border-color: transparent;border-style: solid;width: 0;height: 0;border-bottom-color: #fff;}
+		.up b{left: -10px;top: 1px;border-bottom-color: #ccc;border-width: 4px 10px 5px;}
+		#animation{
+			-webkit-animation:fadeOutUp 1.5s .2s ease both infinite;
+			-moz-animation:fadeOutUp 1.5s .2s ease both infinite;}
+			@-webkit-keyframes fadeOutUp{
+			0%{opacity:1;
+			-webkit-transform:translateY(0)}
+			100%{opacity:0;
+			-webkit-transform:translateY(-20px);}
+		}
+		@-moz-keyframes fadeOutUp{
+		0%{opacity:1;
+		-moz-transform:translateY(0)}
+		100%{opacity:0;
+		-moz-transform:translateY(-20px);}
+		}
+		.canvas{
+			width: 150px;
+			height: 150px;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -50px;
+			margin-left: -50px;
+		}
+		.page3.show  .canvas div{
+			-webkit-backface-visibility:visible;
+			-webkit-transform-origin:center center;
+			-webkit-animation:demo 1.5s 0s infinite ease-in-out normal none ;
+			-moz-backface-visibility:visible;
+			-moz-transform-origin:center center;
+			-moz-animation:demo 1.5s 0s infinite ease-in-out normal none ;
+		}
+		@-webkit-keyframes demo{
+			0%{
+				opacity:0.8;
+				-webkit-transform:scaleX(1) scaleY(1);
+				-moz-transform:scaleX(1) scaleY(1);
+			}
+			100%{
+				opacity:0;
+				-webkit-transform:scaleX(1.5) scaleY(1.5);
+				-moz-transform:scaleX(1.5) scaleY(1.5);
+			} 
+		}
+		.canvas div{position: absolute; width: 100px; height: 100px; border-radius: 60px; background-color: #fff; opacity:0.8;}
+		.canvas b.p{position: absolute; display: block; width: 100px; height: 100px; border-radius: 60px; background-color: #fff; z-index: 2; text-align: center; line-height: 100px; font-size: 30px;}
+		.page2.show .p h2
+		,.page2.show .p p
+		,.page2.show .data
+		,.page3.show .p h2
+		,.page3.show .p p
+		,.page3.show .data
+		,.page4.show .p h2
+		,.page4.show .p p
+		,.page4.show .data
+		,.page5.show .p h2
+		,.page5.show .p p
+		,.page5.show .data
+		,.page6.show .p p{-webkit-transform: translate(0,0);transform: translate(0,0);opacity: 1;}
+		.page2 .p h2
+		,.page2 .p p
+		,.page2 .data
+		,.page4 .p h2
+		,.page4 .p p
+		,.page4 .data
+		,.page5 .data
+		,.page6 .p p{-webkit-transform: translate(50px,0);transform: translate(50px,0);opacity: 0;-webkit-transition: all 0.5s linear;transition: all 0.5s linear;}
+		.page2 .p p
+		,.page3 .data
+		,.page4 .data
+		,.page5 .data{-webkit-transition: all 0.8s linear;transition: all 0.8s linear;}
+		.page2 .data{-webkit-transition: all 1s linear;transition: all 1s linear;}
+span{ display: block;}
+.ico_rea,.ico_com,.ico_fil,.ico_pla,.page8 span{background: url(images/icon02.png) no-repeat;background-size: 496px;}
+.ico_naruto,.ico_roco,.ico_garen,.ico_tri08{background: url(images/icon03.png) no-repeat;background-size: 169px;}
+.ico_tri08{position: absolute;left: 50%;margin-left: -109px;top: 170px;width: 20px;height: 20px;background-position: -31.5px -443px;}
+.ico_reader{z-index: 2;position: absolute;left: 50%;margin-left: -54px;top: 48%;display: block;}
+.page2 .p{z-index: 2;position: absolute;left: 50%;margin-left: -70px;top: 18%;line-height: 1.5;}
+.page3.show .ico_tri08{opacity: 1;-webkit-animation: ico_tri08 1.6s ease-in-out;animation: ico_tri08 1.6s ease-in-out;}
+@-webkit-keyframes ico_tri08 {0% {opacity: 0;-webkit-transform: translate(-80px,100px) rotate(90deg);}50% {opacity: 1;-webkit-transform: translate(30px,30px) scale(1.6) rotate(-45deg);}}
+@keyframes ico_tri08 {0% {opacity: 0;transform: translate(-80px,100px) rotate(90deg);}50% {opacity: 1;transform: translate(30px,30px) scale(1.6) rotate(-45deg);}}
+.page1 span{background: url(../images/icon01.png) no-repeat;background-size: 341.5px;}
+.page1 .ico_tri01{right: 50%;margin-right: 90px;top: 10%;width: 96px;height: 57px;background-position: -2px -8.5px;}
+.page1 .ico_tri02{left: 50%;margin-left: 200px;top: 18%;width: 64px;height: 60px;background-position: -108px -6.5px;}
+.page1 .ico_tri03{right: 50%;margin-right: 64px;top: 47%;width: 93px;height: 40px;background-position: -178px -16.5px;}
+.page1 .ico_tri04{right: 50%;margin-right: 70px;top: 14%;width: 77px;height: 82px;background-position: -2px -76px;}
+.page1 .ico_tri05{left: 50%;margin-left: 210px;top: 42%;width: 85px;height: 104px;background-position: -97.5px -76px;}
+.page1 .ico_tri06{right: 50%;margin-right: 95px;top: 64%;width: 63px;height: 93px;background-position: -202px -76px;}
+.page1.show h2{-webkit-animation: opa 1.5s linear;animation: opa 1.5s linear;}
+@-webkit-keyframes opa {0% {opacity: 0}}
+@keyframes opa {0% {opacity: 0}}
+.page1.show .layer{-webkit-animation: opa_scal 1.2s ease-in-out;animation: opa_scal 1.2s ease-in-out;}
+@-webkit-keyframes opa_scal {0%,50% {-webkit-transform: scale(0);opacity: 0}}
+@keyframes opa_scal {0%,50% {transform: scale(0);opacity: 0}}
+.page2.show .ico_rea{opacity:1;-webkit-animation: ico_reader_cir 1.3s linear;animation: ico_reader_cir 1.3s linear;}
+
+.page2.show .ico_reader_cir{opacity:1;-webkit-animation: ico_reader_cir 1s linear;animation: ico_reader_cir 1s linear;}
+@-webkit-keyframes ico_reader_cir {0%,50% {opacity: 0;-webkit-transform: scale(0);}70% {opacity: 0.8;-webkit-transform: scale(1.5);}80% {opacity: 1;-webkit-transform: scale(0.8);}90% {-webkit-transform: scale(1.2);}}
+@keyframes ico_reader_cir {0%,50% {opacity: 0;transform: translate(-80px,0);}}
+
+.ico_reader{z-index: 2;position: absolute;left: 50%;margin-left: -54px;top: 48%;display: block;}
+.ico_rea{z-index: 1;position: absolute;left: 21px;top: 20px;display: block;width: 77px;height: 70px;background-position: -6.5px -9px;}
+.ico_reader_cir{position: absolute;left: 0;top: 0;display: block;width: 90px;height: 90px;border: 15px solid #FFF;background: #FFC974;border-radius: 100%;}
+.page4 .door{width: 60%; position: absolute; bottom: 0; left: 20%; background-color: #fff; height: 75%;}
+.page4 .door span{background-color: blue;position: absolute;left: 0;top: 0;display: block;width: 100%;height: 100%;background: blue;-webkit-transform: perspective(900px) rotate3d(0,1,0,20deg);-webkit-transform-origin:0% 50%;transform: perspective(900px) rotate3d(0,1,0,20deg);transform-origin:0% 50%; z-index: 3;}
+.page4.show .door span{opacity: 1;-webkit-transform: perspective(900px) rotate3d(0,1,0,82deg);-webkit-transform-origin:0% 50%;transform: perspective(900px) rotate3d(0,1,0,82deg);transform-origin:0% 50%;-webkit-animation: door 0.5s ease-in-out;animation: door 0.5s ease-in-out;}
+@-webkit-keyframes door {0%,50% {-webkit-transform: perspective(900px) rotate3d(0,1,0,20deg);-webkit-transform-origin:0% 50%;}}
+@keyframes door {0%,50% {transform: perspective(900px) rotate3d(0,1,0,20deg);transform-origin:0% 50%;}}
+	</style>
+  </head>
+  <body onmousewheel="return false;">
+	<div class="log">
+		<div class="transform" id="log">dsnoi</div>
+		<div id="logend"></div>
+	</div>
+    <div id="scene" class="animate">
+		<sction class="page page1 page1 show">			
+			<div class="layer" data-depth="0.75">
+				<span class="ico_tri01"></span>
+				<span class="ico_tri02"></span>
+				<span class="ico_tri03"></span>
+			</div>
+			<div class="layer" data-depth="1.2">
+				<span class="ico_tri04"></span>
+				<span class="ico_tri05"></span>
+				<span class="ico_tri06"></span>
+			</div>
+			<div class="start">
+				<b aria-hidden="true" data-icon="1"></b>
+			</div>
+		</sction>
+		<sction class="page page2">	
+				<div class="p">
+					<h2>主办</h2>
+					<p>君映像文化传媒（北京）有限公司</p>
+					<p>观众网（www.iguanzhong.com）</p>
+					<p>第一期主题“网络剧的商业前景与创作方向”</p>
+
+					<p>场地支持：中发源西北盛宴</p>
+				</div>
+				<div class="data">4月12日14:00—17:00</div>		
+			<span class="ico_reader">
+				<span class="ico_rea"></span>
+				<span class="ico_reader_cir"></span>
+			</span>
+			<div class="up-box">
+				<div class="up" id="animation"><b></b></div>
+			</div>
+		</sction>
+		<sction class="page page3">
+			<div class="layer" data-depth="1">
+					<span class="ico_tri08"></span>
+			</div>
+			<div class="canvas">
+				<b class="p">V电影</b>
+				<div></div>
+			</div>
+			<div class="up-box">
+				<div class="up" id="animation"><b></b></div>
+			</div>
+		</sction>
+		<sction class="page page4">
+			<div class="door">
+				<span></span>
+			</div>
+			<div class="up-box">
+				<div class="up" id="animation"><b></b></div>
+			</div>
+		</sction>
+		<sction class="page page5">
+			<div class="up-box">
+				<div class="up" id="animation"><b></b></div>
+			</div>
+		</sction>
+	</div>
+	<script src="../javascripts/parallax.js"></script>
+	<script>
+		var  winWidth = $(window).width()//窗口宽度
+			,winHeight = $(window).height()//窗口高度
+			,pageTop = 0//定位top
+			,pageTopStart = 0//拖拽之前的定位
+			,pageYStart = 0//touch开始的y轴坐标
+			// ,pageYEnd = 0//touch结束的y轴坐标
+			,num = $('.page').length//总页数
+			,curentPage = 1//当前页面 1,2,3,4,5
+			,direction = 0;//方向
+			
+		initPage();//初始化页面
+		function initPage () {			
+			$('body').height(winHeight);//初始化页面的高度为视口高度
+			$('.page').add('body').height(winHeight);//初试化每页大小
+		}
+		document.body.addEventListener('touchstart',function (e){
+        	e.preventDefault();
+			var e = e.changedTouches[0];
+			start(e);
+		});
+		document.body.addEventListener('touchmove', function (e){
+        	e.preventDefault();
+			var e = e.changedTouches[0];
+			move(e);
+		});
+		document.body.addEventListener('touchend', function (e){
+        	e.preventDefault();
+			var e = e.changedTouches[0];
+			end(e);
+		});
+		function start(e){
+			pageYStart = e.pageY;//获取初次Y轴坐标
+			pageTopStart = pageTop = sliceTranslateY($('#scene').css('-webkit-transform'));
+		}
+
+		function move(e){
+			var pageYMove = e.pageY//当前Y轴坐标
+				,stepLength = pageYMove - pageYStart//步长
+				,pageTopMove = pageTop + stepLength;
+
+			direction = stepLength > 0 ? 0 : 1//0表示下，1表示上
+			setMatrix(pageTopMove);
+		}
+
+		function end(e){
+			var pageTopEnd = sliceTranslateY($('#scene').css('-webkit-transform'))
+				,pageYEnd = e.pageY;
+
+			/*if(pageTopEnd >= 0){
+				var translateY =0;
+				setMatrix(translateY);
+				return false;	
+			}else if(pageTopEnd <= -((num-1)*winHeight)){
+				var translateY =-(num-1)*winHeight;
+				setMatrix(translateY);
+				return false;
+			}*/
+			if(Math.abs(pageYEnd-pageYStart)<50){
+				noPage();//步长过小，不翻页
+			}else if(Math.abs(pageYEnd-pageYStart)>=50 && direction === 0){
+				prevPage();//上一页
+			}else if(Math.abs(pageYEnd-pageYStart)>=50 && direction === 1){
+				nextPage();//下一页
+			}
+		}
+		function sliceTranslateY(y){
+			y = y.replace('matrix(','');
+			y = y.replace(')','');
+			y = y.split(',');
+			y = parseInt(y[5]);
+			return y
+		}
+
+		function setMatrix(translateY){
+			$('#scene').css('-webkit-transform','matrix(1, 0, 0, 1, 0,'+ translateY+')');
+		}
+
+		function noPage(){		
+			var translateY = -(curentPage - 1) * winHeight;
+			setMatrix(translateY);
+		}
+
+		function nextPage(){
+			if(curentPage == num){//最后页面，不再下一页
+				curentPage = num;
+				setMatrix(-(num-1)*winHeight);
+			}else{
+				curentPage = curentPage + 1;
+				var translateY = -(curentPage - 1) * winHeight;
+				setMatrix(translateY);
+				$('.show').removeClass('show');
+				$('.page'+curentPage).addClass('show');
+			}
+		}
+
+		function prevPage(){
+			if(curentPage == 1){//第一页，不再上一页
+				curentPage = 1;
+				setMatrix(0);
+			}else{
+				curentPage = curentPage - 1;
+				var translateY = -(curentPage - 1) * winHeight;
+				setMatrix(translateY);
+				$('.show').removeClass('show');
+				$('.page'+curentPage).addClass('show');
+			}
+		}
+		// 视差
+		var scene = document.getElementById('scene');
+		var parallax = new Parallax(scene);
+
+	</script>
+  </body>
+</html>
